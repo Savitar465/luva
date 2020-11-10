@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-// Es nuestro primer proyecto
+// Es mi primer proyecto
 function App() {
   return (
     <div className="App">//pruba 2
