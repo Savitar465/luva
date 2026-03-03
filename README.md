@@ -1,4 +1,4 @@
-# Luva - Ice Cream Shop Management System
+# Luvasi- Ice Cream Shop Management System
 
 Sistema de gestión para heladería construido con Next.js y Supabase.
 
