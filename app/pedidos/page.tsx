@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { getPresentaciones } from '@/lib/services/productos';
 import { getIconForPresentation } from './data';
-import { IceCreamIcon } from './icons';
+import { IceCreamIcon } from '@/public/icons';
 import { Presentation } from './types';
 
 export default function PedidoPage() {

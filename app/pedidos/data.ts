@@ -1,4 +1,4 @@
-import {ConeIcon, ContainerIcon, CupIcon} from './icons';
+import {ConeIcon, ContainerIcon, CupIcon} from '@/public/icons';
 
 /**
  * Mapea productos de la DB a sus respectivos iconos
