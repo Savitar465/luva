@@ -220,6 +220,38 @@ body {
   background: #141414;
 }
 
+/* ── Animations ── */
+@keyframes posAddedPop {
+  0% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes posToastIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.pos-added-pop {
+  animation: posAddedPop 240ms ease-out;
+}
+
+.pos-toast-in {
+  animation: posToastIn 180ms ease-out;
+}
+
 /* ── Responsive ── */
 @media (max-width: 768px) {
   .order-container {

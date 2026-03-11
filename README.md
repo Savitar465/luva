@@ -104,6 +104,13 @@ INSERT INTO productos (nombre, tipo, precio_unitario) VALUES
     ('Crema batida', 'topping', 1.00);
 ```
 
+4. Habilita Realtime para escuchar cambios de pedidos en vivo:
+
+```sql
+alter publication supabase_realtime add table pedidos;
+alter publication supabase_realtime add table detalle_pedidos;
+```
+
 ### 3. Variables de entorno
 
 Copia el archivo `.env.local` y actualiza con tus credenciales de Supabase:
@@ -121,7 +128,9 @@ Puedes encontrar estas credenciales en: Settings > API > Project URL y anon/publ
 npm run dev
 ```
 
-Visita [http://localhost:3000/pedido](http://localhost:3000/pedido)
+Visita:
+- `http://localhost:3000/pedidos` (pantalla vendedor)
+- `http://localhost:3000/pedidos-resumen` (customer facing display)
 
 ## Estructura del Proyecto
 
@@ -132,21 +141,31 @@ Visita [http://localhost:3000/pedido](http://localhost:3000/pedido)
 │   │   ├── icons.tsx         # Componentes SVG
 │   │   ├── types.ts          # Tipos TypeScript
 │   │   └── data.ts           # Utilidades y mapeo de iconos
+│   ├── pedidos/
+│   │   ├── page.tsx          # Pantalla vendedor
+│   │   ├── types.ts
+│   │   └── data.ts
+│   ├── pedidos-resumen/
+│   │   └── page.tsx          # Customer Facing Display
 │   └── ...
 ├── lib/
 │   ├── supabase/
 │   │   ├── client.ts         # Cliente de Supabase
 │   │   └── types.ts          # Tipos generados de la DB
 │   └── services/
-│       └── productos.ts      # Servicios para productos
+│       ├── productos.ts
+│       ├── pedidos.ts
+│       └── pedidosRealtime.ts
 └── ...
 ```
 
 ## Características
 
-- ✅ Selección de presentaciones desde Supabase
-- ✅ Gestión de productos (sabores, toppings, presentaciones)
-- ✅ Sistema de pedidos
-- 🚧 Selección de sabores (próximamente)
-- 🚧 Gestión de toppings (próximamente)
-- 🚧 Procesamiento de pagos (próximamente)
+- Selección y edición de items en pedido activo (agregar / quitar / modificar cantidad)
+- Sincronización en tiempo real entre vendedor y pantalla cliente con Supabase Realtime
+- Registro de transacción completa en `pedidos` y `detalle_pedidos` (items, cantidades, precios, total, hora, vendedor)
+- Cierre de venta: cambia estado a `completado` y abre un nuevo pedido en proceso
+- Gestión de productos (sabores, toppings, presentaciones)
+- Selección de sabores (próximamente)
+- Gestión de toppings (próximamente)
+- Procesamiento de pagos (próximamente)
