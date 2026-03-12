@@ -19,6 +19,12 @@ type DetalleWithProducto = {
   } | null;
 };
 
+type DetalleSubtotalRow = {
+  cantidad: number;
+  precio_unit: number;
+  subtotal: number | null;
+};
+
 const DEFAULT_FORMA_PAGO_ID = 1;
 
 function toItemView(row: DetalleWithProducto): PedidoItemView {
@@ -48,8 +54,22 @@ async function getPedidoItems(pedidoId: number) {
   return (data ?? []) as DetalleWithProducto[];
 }
 
-async function syncPedidoTotal(pedidoId: number) {
-  const rows = await getPedidoItems(pedidoId);
+async function getPedidoSubtotalRows(pedidoId: number) {
+  const { data, error } = await supabase
+    .from('detalle_pedidos')
+    .select('cantidad,precio_unit,subtotal')
+    .eq('pedido_id', pedidoId);
+
+  if (error) {
+    console.error('Error fetching detalle_pedidos subtotals:', error);
+    throw error;
+  }
+
+  return (data ?? []) as DetalleSubtotalRow[];
+}
+
+export async function syncPedidoTotal(pedidoId: number) {
+  const rows = await getPedidoSubtotalRows(pedidoId);
   const total = rows.reduce((acc, row) => acc + Number(row.subtotal ?? row.cantidad * row.precio_unit), 0);
 
   const { error } = await supabase
@@ -158,10 +178,20 @@ export async function getLatestPedidoActivoView(vendedorPin?: string): Promise<P
   };
 }
 
-export async function addOrIncrementItem(pedidoId: number, producto: ProductoDB) {
+export async function addOrIncrementItem(
+  pedidoId: number,
+  producto: ProductoDB,
+  quantityDelta = 1,
+  shouldSyncTotal = true,
+) {
+  const normalizedQuantityDelta = Number.isFinite(quantityDelta)
+    ? Math.max(1, Math.trunc(quantityDelta))
+    : 1;
+  const precioUnit = Number(producto.precio_unitario);
+
   const { data: existing, error: existingError } = await supabase
     .from('detalle_pedidos')
-    .select('id,cantidad')
+    .select('id,cantidad,precio_unit')
     .eq('pedido_id', pedidoId)
     .eq('producto_id', producto.id)
     .maybeSingle();
@@ -172,9 +202,13 @@ export async function addOrIncrementItem(pedidoId: number, producto: ProductoDB)
   }
 
   if (existing) {
+    const nextCantidad = existing.cantidad + normalizedQuantityDelta;
+
     const { error } = await supabase
       .from('detalle_pedidos')
-      .update({ cantidad: existing.cantidad + 1 })
+      .update({
+        cantidad: nextCantidad,
+      })
       .eq('id', existing.id);
 
     if (error) {
@@ -187,8 +221,8 @@ export async function addOrIncrementItem(pedidoId: number, producto: ProductoDB)
       .insert({
         pedido_id: pedidoId,
         producto_id: producto.id,
-        cantidad: 1,
-        precio_unit: Number(producto.precio_unitario),
+        cantidad: normalizedQuantityDelta,
+        precio_unit: precioUnit,
       });
 
     if (error) {
@@ -197,7 +231,9 @@ export async function addOrIncrementItem(pedidoId: number, producto: ProductoDB)
     }
   }
 
-  await syncPedidoTotal(pedidoId);
+  if (shouldSyncTotal) {
+    await syncPedidoTotal(pedidoId);
+  }
 }
 
 export async function decrementOrRemoveItem(pedidoId: number, productoId: number) {

@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import type { PresentationViewModel } from '@/features/pedidos/types';
 
 interface PresentationCardProps {
@@ -8,7 +9,7 @@ interface PresentationCardProps {
   onAdd: (presentation: PresentationViewModel) => void;
 }
 
-export function PresentationCard({
+function PresentationCardComponent({
   presentation,
   quantity,
   isJustAdded,
@@ -53,4 +54,14 @@ export function PresentationCard({
     </button>
   );
 }
+
+export const PresentationCard = memo(PresentationCardComponent, (prevProps, nextProps) => {
+  return (
+    prevProps.presentation === nextProps.presentation
+    && prevProps.quantity === nextProps.quantity
+    && prevProps.isJustAdded === nextProps.isJustAdded
+    && prevProps.disabled === nextProps.disabled
+    && prevProps.onAdd === nextProps.onAdd
+  );
+});
 

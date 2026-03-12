@@ -31,7 +31,7 @@ export type Database = {
           pedido_id: number
           precio_unit: number
           producto_id: number
-          subtotal?: number | null
+          subtotal?: never
         }
         Update: {
           cantidad?: number
@@ -40,7 +40,7 @@ export type Database = {
           pedido_id?: number
           precio_unit?: number
           producto_id?: number
-          subtotal?: number | null
+          subtotal?: never
         }
         Relationships: [
           {

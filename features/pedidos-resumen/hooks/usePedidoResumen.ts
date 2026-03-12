@@ -53,6 +53,7 @@ export function usePedidoResumen({ vendorPin }: UsePedidoResumenOptions = {}) {
         });
       },
       setRealtimeStatus,
+      { debounceMs: 120 },
     );
 
     return () => {
