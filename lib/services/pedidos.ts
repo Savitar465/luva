@@ -1,6 +1,6 @@
 import { supabase } from '@/lib/supabase/client';
 import { Database } from '@/lib/supabase/types';
-import { PedidoActivoView, PedidoItemView, ProductoDB } from '@/app/pedidos/types';
+import { PedidoActivoView, PedidoItemView, ProductoDB } from '@/lib/types/pedidos';
 
 type Pedido = Database['public']['Tables']['pedidos']['Row'];
 type PedidoInsert = Database['public']['Tables']['pedidos']['Insert'];
@@ -122,11 +122,17 @@ export async function getPedidoActivoView(vendedorPin: string): Promise<PedidoAc
   };
 }
 
-export async function getLatestPedidoActivoView(): Promise<PedidoActivoView | null> {
-  const { data, error } = await supabase
+export async function getLatestPedidoActivoView(vendedorPin?: string): Promise<PedidoActivoView | null> {
+  let query = supabase
     .from('pedidos')
     .select('*')
-    .eq('estado', 'en_proceso')
+    .eq('estado', 'en_proceso');
+
+  if (vendedorPin) {
+    query = query.eq('vendedor_pin', vendedorPin);
+  }
+
+  const { data, error } = await query
     .order('creado_en', { ascending: false })
     .limit(1)
     .maybeSingle();

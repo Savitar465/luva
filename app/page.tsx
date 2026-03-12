@@ -1,7 +1,5 @@
-import {SelectSection} from "@/app/components/SelectSection";
+import { SelectSection } from '@/features/home/components/SelectSection';
 
 export default function Home() {
-  return (
-      SelectSection()
-  );
+  return <SelectSection />;
 }

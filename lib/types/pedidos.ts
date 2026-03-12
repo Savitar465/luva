@@ -1,17 +1,6 @@
 import { Database } from '@/lib/supabase/types';
 
 export type ProductoDB = Database['public']['Tables']['productos']['Row'];
-export type PedidoDB = Database['public']['Tables']['pedidos']['Row'];
-export type DetallePedidoDB = Database['public']['Tables']['detalle_pedidos']['Row'];
-
-export interface Presentation {
-  id: number;
-  name: string;
-  basePrice: number;
-  icon: React.ComponentType;
-  dbProduct?: ProductoDB;
-}
-
 export interface PedidoItemView {
   id: number;
   productoId: number;
@@ -30,3 +19,4 @@ export interface PedidoActivoView {
   total: number;
   items: PedidoItemView[];
 }
+
