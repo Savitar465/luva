@@ -4,7 +4,7 @@ interface CurrentOrderPanelProps {
   items: PedidoItemView[];
 }
 
-export function CurrentOrderPanel({ items }: CurrentOrderPanelProps) {
+export function CurrentOrderPanel({ items }: Readonly<CurrentOrderPanelProps>) {
   return (
     <div className="rounded-2xl border border-gray-200 bg-white p-4 sm:p-5">
       <h3 className="mb-3 text-lg font-semibold text-[#141414]">Pedido actual</h3>
