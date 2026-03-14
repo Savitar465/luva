@@ -25,6 +25,11 @@ type DetalleSubtotalRow = {
   subtotal: number | null;
 };
 
+type PendingAddInput = {
+  producto: ProductoDB;
+  count: number;
+};
+
 const DEFAULT_FORMA_PAGO_ID = 1;
 
 function toItemView(row: DetalleWithProducto): PedidoItemView {
@@ -184,49 +189,92 @@ export async function addOrIncrementItem(
   quantityDelta = 1,
   shouldSyncTotal = true,
 ) {
-  const normalizedQuantityDelta = Number.isFinite(quantityDelta)
-    ? Math.max(1, Math.trunc(quantityDelta))
-    : 1;
-  const precioUnit = Number(producto.precio_unitario);
+  await addOrIncrementItemsBatch(
+    pedidoId,
+    [{ producto, count: quantityDelta }],
+    shouldSyncTotal,
+  );
+}
 
-  const { data: existing, error: existingError } = await supabase
+export async function addOrIncrementItemsBatch(
+  pedidoId: number,
+  additions: PendingAddInput[],
+  shouldSyncTotal = true,
+) {
+  const normalized = additions
+    .map((entry) => ({
+      producto: entry.producto,
+      count: Number.isFinite(entry.count) ? Math.max(1, Math.trunc(entry.count)) : 1,
+    }))
+    .filter((entry) => entry.count > 0);
+
+  if (normalized.length === 0) {
+    return;
+  }
+
+  const productIds = normalized.map((entry) => entry.producto.id);
+  const { data: existingRows, error: existingError } = await supabase
     .from('detalle_pedidos')
-    .select('id,cantidad,precio_unit')
+    .select('id,producto_id,cantidad')
     .eq('pedido_id', pedidoId)
-    .eq('producto_id', producto.id)
-    .maybeSingle();
+    .in('producto_id', productIds);
 
   if (existingError) {
-    console.error('Error checking existing order item:', existingError);
+    console.error('Error checking existing order items:', existingError);
     throw existingError;
   }
 
-  if (existing) {
-    const nextCantidad = existing.cantidad + normalizedQuantityDelta;
+  const existingByProductId = new Map<number, { id: number; cantidad: number }>(
+    (existingRows ?? []).map((row) => [row.producto_id, { id: row.id, cantidad: row.cantidad }]),
+  );
 
-    const { error } = await supabase
-      .from('detalle_pedidos')
-      .update({
-        cantidad: nextCantidad,
-      })
-      .eq('id', existing.id);
+  const updates: PromiseLike<unknown>[] = [];
+  const inserts: Database['public']['Tables']['detalle_pedidos']['Insert'][] = [];
 
-    if (error) {
-      console.error('Error incrementing order item:', error);
-      throw error;
+  normalized.forEach(({ producto, count }) => {
+    const existing = existingByProductId.get(producto.id);
+
+    if (existing) {
+      updates.push(
+        supabase
+          .from('detalle_pedidos')
+          .update({ cantidad: existing.cantidad + count })
+          .eq('id', existing.id)
+          .then(({ error }) => {
+            if (error) {
+              throw error;
+            }
+          }),
+      );
+      return;
     }
-  } else {
-    const { error } = await supabase
-      .from('detalle_pedidos')
-      .insert({
-        pedido_id: pedidoId,
-        producto_id: producto.id,
-        cantidad: normalizedQuantityDelta,
-        precio_unit: precioUnit,
-      });
 
-    if (error) {
-      console.error('Error adding order item:', error);
+    inserts.push({
+      pedido_id: pedidoId,
+      producto_id: producto.id,
+      cantidad: count,
+      precio_unit: Number(producto.precio_unitario),
+    });
+  });
+
+  if (inserts.length > 0) {
+    updates.push(
+      supabase
+        .from('detalle_pedidos')
+        .insert(inserts)
+        .then(({ error }) => {
+          if (error) {
+            throw error;
+          }
+        }),
+    );
+  }
+
+  if (updates.length > 0) {
+    try {
+      await Promise.all(updates);
+    } catch (error) {
+      console.error('Error applying order item batch:', error);
       throw error;
     }
   }
@@ -315,3 +363,23 @@ export async function finalizePedido(pedidoId: number, vendedorPin: string, form
 
   return data as Pedido;
 }
+
+export async function cancelPedido(pedidoId: number, vendedorPin: string) {
+  const { data, error } = await supabase
+    .from('pedidos')
+    .update({
+      estado: 'anulado',
+      vendedor_pin: vendedorPin,
+    })
+    .eq('id', pedidoId)
+    .select('*')
+    .single();
+
+  if (error) {
+    console.error('Error canceling pedido:', error);
+    throw error;
+  }
+
+  return data as Pedido;
+}
+

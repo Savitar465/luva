@@ -74,4 +74,14 @@ export function mergePendingAddsIntoPedido(
   return mergedPedido;
 }
 
+export function removePedidoItem(pedido: PedidoActivoView, productoId: number): PedidoActivoView {
+  const nextItems = pedido.items.filter((item) => item.productoId !== productoId);
+
+  return {
+    ...pedido,
+    items: nextItems,
+    total: calculatePedidoTotal(nextItems),
+  };
+}
+
 

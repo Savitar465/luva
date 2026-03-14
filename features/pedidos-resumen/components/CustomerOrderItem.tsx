@@ -24,12 +24,12 @@ export function CustomerOrderItem({ item }: CustomerOrderItemProps) {
         <div>
           <h2 className="text-xl font-bold text-[#141414] sm:text-2xl">{item.nombre}</h2>
           <p className="text-sm font-medium text-slate-500 sm:text-lg">
-            Cantidad: {item.cantidad} x ${item.precioUnit.toFixed(2)}
+            Cantidad: {item.cantidad} x Bs. {item.precioUnit.toFixed(2)}
           </p>
         </div>
       </div>
 
-      <span className="text-2xl font-bold text-[#141414] sm:text-3xl">${item.subtotal.toFixed(2)}</span>
+      <span className="text-2xl font-bold text-[#141414] sm:text-3xl">Bs. {item.subtotal.toFixed(2)}</span>
     </li>
   );
 }
