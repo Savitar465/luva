@@ -1,7 +1,6 @@
 'use client';
 
 import { LoadingSpinner } from '@/features/shared/ui/LoadingSpinner';
-import { AddFeedbackToast } from '@/features/pedidos/components/AddFeedbackToast';
 import { CurrentOrderPanel } from '@/features/pedidos/components/CurrentOrderPanel';
 import { PedidoFooter } from '@/features/pedidos/components/PedidoFooter';
 import { PedidoHeader } from '@/features/pedidos/components/PedidoHeader';
@@ -24,16 +23,19 @@ export function PedidoVendedorScreen() {
     activeOrder,
     loading,
     isFinalizing,
+    isCancelling,
     pendingAdds,
     error,
     realtimeStatus,
     lastAddedPresentationId,
-    addFeedback,
     qtyByPresentationId,
     handleAdd,
+    handleRemoveItem,
+    handleCancelOrder,
     handleFinalize,
     canAddItems,
     canFinalize,
+    canCancel,
   } = usePedidoVendedor({
     vendorPin,
     enabled: isHydrated,
@@ -65,7 +67,6 @@ export function PedidoVendedorScreen() {
         />
 
         <section className="flex-1 px-6 py-6">
-          {addFeedback ? <AddFeedbackToast message={addFeedback} /> : null}
 
           {!isHydrated || loading ? (
             <LoadingSpinner className="py-12" />
@@ -85,17 +86,24 @@ export function PedidoVendedorScreen() {
                 onAdd={handleAdd}
               />
 
-              <CurrentOrderPanel items={activeOrder?.items ?? []} />
+              <CurrentOrderPanel
+                items={activeOrder?.items ?? []}
+                disableActions={!canAddItems || pendingAdds > 0}
+                onRemoveItem={handleRemoveItem}
+              />
             </div>
           ) : null}
         </section>
 
         <PedidoFooter
           total={Number(activeOrder?.total ?? 0)}
-          disabled={!canFinalize}
+          disableFinalize={!canFinalize}
+          disableCancel={!canCancel}
           pendingAdds={pendingAdds}
           isFinalizing={isFinalizing}
+          isCancelling={isCancelling}
           onFinalize={handleFinalize}
+          onCancel={handleCancelOrder}
         />
       </div>
     </div>

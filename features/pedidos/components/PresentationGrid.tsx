@@ -15,7 +15,7 @@ export function PresentationGrid({
   lastAddedPresentationId,
   canAddItems,
   onAdd,
-}: Readonly<PresentationGridProps>) {
+}: PresentationGridProps) {
   return (
     <div>
       <h2 className="mb-1 text-lg font-semibold text-[#141414]">Presentaciones</h2>
