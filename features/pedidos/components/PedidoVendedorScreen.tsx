@@ -26,7 +26,6 @@ export function PedidoVendedorScreen() {
     isCancelling,
     pendingAdds,
     error,
-    realtimeStatus,
     lastAddedPresentationId,
     qtyByPresentationId,
     handleAdd,
@@ -61,7 +60,6 @@ export function PedidoVendedorScreen() {
         />
 
         <RealtimeStatusBar
-          realtimeStatus={realtimeStatus}
           activeOrderId={activeOrder?.id}
           pendingAdds={pendingAdds}
         />
@@ -88,7 +86,7 @@ export function PedidoVendedorScreen() {
 
               <CurrentOrderPanel
                 items={activeOrder?.items ?? []}
-                disableActions={!canAddItems || pendingAdds > 0}
+                disableActions={!canFinalize}
                 onRemoveItem={handleRemoveItem}
               />
             </div>

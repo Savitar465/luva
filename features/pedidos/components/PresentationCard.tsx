@@ -15,7 +15,7 @@ function PresentationCardComponent({
   isJustAdded,
   disabled = false,
   onAdd,
-}: PresentationCardProps) {
+}: Readonly<PresentationCardProps>) {
   const Icon = presentation.icon;
 
   return (

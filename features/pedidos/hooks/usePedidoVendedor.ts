@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { toPresentationViewModel } from '@/features/pedidos/domain/pedidoPresentation';
 import { usePedidoAddQueue } from '@/features/pedidos/hooks/domain/usePedidoAddQueue';
-import { usePedidoRealtimeSync } from '@/features/pedidos/hooks/domain/usePedidoRealtimeSync';
 import type { PresentationViewModel } from '@/features/pedidos/types';
 import {
   incrementPedidoItem,
@@ -33,9 +32,7 @@ export function usePedidoVendedor({ vendorPin, enabled = true }: UsePedidoVended
   const [isFinalizing, setIsFinalizing] = useState(false);
   const [isCancelling, setIsCancelling] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [realtimeStatus, setRealtimeStatus] = useState<'CONNECTED' | 'DISCONNECTED'>('DISCONNECTED');
   const [lastAddedPresentationId, setLastAddedPresentationId] = useState<number | null>(null);
-  const clearFeedbackTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const activeOrderRef = useRef<PedidoActivoView | null>(null);
   const refreshActiveOrderRef = useRef<(pin: string) => Promise<PedidoActivoView | null>>(async () => null);
 
@@ -95,14 +92,6 @@ export function usePedidoVendedor({ vendorPin, enabled = true }: UsePedidoVended
   }, [refreshActiveOrder]);
 
   useEffect(() => {
-    return () => {
-      if (clearFeedbackTimerRef.current) {
-        clearTimeout(clearFeedbackTimerRef.current);
-      }
-    };
-  }, []);
-
-  useEffect(() => {
     if (!enabled) {
       return;
     }
@@ -151,12 +140,7 @@ export function usePedidoVendedor({ vendorPin, enabled = true }: UsePedidoVended
     };
   }, [enabled, refreshActiveOrder, registerPresentationModels, resetQueueState, vendorPin]);
 
-  usePedidoRealtimeSync({
-    enabled,
-    vendorPin,
-    refreshActiveOrder,
-    onStatusChange: setRealtimeStatus,
-  });
+
 
   const qtyByPresentationId = useMemo(() => {
     const map = new Map<number, number>();
@@ -259,7 +243,6 @@ export function usePedidoVendedor({ vendorPin, enabled = true }: UsePedidoVended
     isCancelling,
     pendingAdds,
     error,
-    realtimeStatus,
     lastAddedPresentationId,
     qtyByPresentationId,
     handleAdd,
