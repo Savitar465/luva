@@ -156,10 +156,14 @@ export function usePedidoVendedor({ vendorPin, enabled = true }: UsePedidoVended
         return;
       }
       setError(null);
+      setLastAddedPresentationId(presentation.id);
       queueAdd(presentation);
       setActiveOrder((currentOrder) =>
         currentOrder ? incrementPedidoItem(currentOrder, presentation) : currentOrder,
       );
+      window.setTimeout(() => {
+        setLastAddedPresentationId((currentId) => (currentId === presentation.id ? null : currentId));
+      }, 220);
     },
     [queueAdd],
   );
@@ -211,13 +215,7 @@ export function usePedidoVendedor({ vendorPin, enabled = true }: UsePedidoVended
     const currentOrder = activeOrderRef.current;
 
     if (!currentOrder || currentOrder.items.length === 0) {
-      return;
-    }
-
-    const isConfirmed = window.confirm('Se cancelara el pedido actual. Esta accion no se puede deshacer.');
-
-    if (!isConfirmed) {
-      return;
+      return false;
     }
 
     try {
@@ -227,9 +225,11 @@ export function usePedidoVendedor({ vendorPin, enabled = true }: UsePedidoVended
       await ensurePedidoActivo(vendorPin);
       await refreshActiveOrder(vendorPin);
       setError(null);
+      return true;
     } catch (cancelError) {
       console.error('Error canceling order:', cancelError);
       setError('No se pudo cancelar el pedido.');
+      return false;
     } finally {
       setIsCancelling(false);
     }

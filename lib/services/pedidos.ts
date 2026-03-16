@@ -183,6 +183,31 @@ export async function getLatestPedidoActivoView(vendedorPin?: string): Promise<P
   };
 }
 
+export async function getActiveVendorPins(limit = 100): Promise<string[]> {
+  const { data, error } = await supabase
+    .from('pedidos')
+    .select('vendedor_pin,creado_en')
+    .eq('estado', 'en_proceso')
+    .order('creado_en', { ascending: false })
+    .limit(limit);
+
+  if (error) {
+    console.error('Error fetching active vendor pins:', error);
+    throw error;
+  }
+
+  const uniquePins = new Set<string>();
+
+  (data ?? []).forEach((row) => {
+    const normalized = row.vendedor_pin?.trim().toUpperCase();
+    if (normalized) {
+      uniquePins.add(normalized);
+    }
+  });
+
+  return [...uniquePins];
+}
+
 export async function addOrIncrementItem(
   pedidoId: number,
   producto: ProductoDB,

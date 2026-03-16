@@ -78,7 +78,7 @@ export function SelectSection() {
             </div>
           </Link>
 
-          <Link href="/pedidos-resumen" className="group">
+          <Link href="/pedidos-resumen/seleccionar" className="group">
             <div className="cursor-pointer rounded-3xl border border-gray-100 bg-white p-8 shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl lg:p-10">
               <div className="flex flex-col items-center text-center">
                 <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-linear-to-br from-purple-500 to-purple-600 shadow-lg transition-transform duration-300 group-hover:scale-110 lg:h-24 lg:w-24">
@@ -122,7 +122,7 @@ export function SelectSection() {
         </div>
 
         <div className="mt-12 text-center">
-          <p className="text-sm text-gray-500">Sistema de gestion v1.0 • Luva Ice Cream</p>
+          <p className="text-sm text-gray-500">Sistema de gestion v1.0 • Luvasi Ice Cream</p>
         </div>
       </div>
     </div>

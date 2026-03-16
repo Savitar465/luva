@@ -1,23 +1,24 @@
 'use client';
 
-import { useMemo } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { CustomerDisplayHeader } from '@/features/pedidos-resumen/components/CustomerDisplayHeader';
+import { CustomerOrderList } from '@/features/pedidos-resumen/components/CustomerOrderList';
+import { CustomerTotalFooter } from '@/features/pedidos-resumen/components/CustomerTotalFooter';
+import { usePedidoResumen } from '@/features/pedidos-resumen/hooks/usePedidoResumen';
 import { LoadingSpinner } from '@/features/shared/ui/LoadingSpinner';
-import {usePedidoResumen} from "@/features/pedidos-resumen/hooks/usePedidoResumen";
-import {CustomerDisplayHeader} from "@/features/pedidos-resumen/components/CustomerDisplayHeader";
-import {CustomerOrderList} from "@/features/pedidos-resumen/components/CustomerOrderList";
-import {CustomerTotalFooter} from "@/features/pedidos-resumen/components/CustomerTotalFooter";
 
+interface PedidoResumenScreenProps {
+  vendorPin: string;
+}
 
 function DisplayStateCard({
   title,
   description,
   tone = 'neutral',
-}: {
+}: Readonly<{
   title: string;
   description?: string;
   tone?: 'neutral' | 'error';
-}) {
+}>) {
   return (
     <div
       className={`rounded-2xl border p-6 shadow-sm sm:p-8 ${
@@ -32,11 +33,9 @@ function DisplayStateCard({
   );
 }
 
-export function PedidoResumenScreen() {
-  const searchParams = useSearchParams();
-  const vendorPinParam = useMemo(() => searchParams.get('vendor'), [searchParams]);
-  const { pedido, loading, error, realtimeStatus, total, vendorPin } = usePedidoResumen({
-    vendorPin: vendorPinParam,
+export function PedidoResumenScreen({ vendorPin }: Readonly<PedidoResumenScreenProps>) {
+  const { pedido, loading, error, realtimeStatus, total } = usePedidoResumen({
+    vendorPin,
   });
 
   return (
@@ -51,6 +50,7 @@ export function PedidoResumenScreen() {
       />
 
       <div className="relative z-10 flex w-full max-w-6xl flex-col gap-6 px-4 py-8 sm:px-6 lg:px-10 lg:py-12">
+
         <CustomerDisplayHeader realtimeStatus={realtimeStatus} vendorPin={vendorPin} />
 
         {loading ? (

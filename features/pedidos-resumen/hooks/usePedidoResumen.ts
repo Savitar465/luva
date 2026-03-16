@@ -6,10 +6,10 @@ import { subscribePedidosRealtime } from '@/lib/services/pedidosRealtime';
 import type { PedidoActivoView } from '@/lib/types/pedidos';
 
 interface UsePedidoResumenOptions {
-  vendorPin?: string | null;
+  vendorPin: string;
 }
 
-export function usePedidoResumen({ vendorPin }: UsePedidoResumenOptions = {}) {
+export function usePedidoResumen({ vendorPin }: UsePedidoResumenOptions) {
   const [pedido, setPedido] = useState<PedidoActivoView | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -53,14 +53,14 @@ export function usePedidoResumen({ vendorPin }: UsePedidoResumenOptions = {}) {
         });
       },
       setRealtimeStatus,
-      { debounceMs: 120 },
+      { debounceMs: 120, vendorPin: normalizedVendorPin },
     );
 
     return () => {
       isCancelled = true;
       unsubscribe();
     };
-  }, [loadPedido]);
+  }, [loadPedido, normalizedVendorPin]);
 
   const total = useMemo(() => Number(pedido?.total ?? 0), [pedido]);
 

@@ -1,11 +1,19 @@
-import { Suspense } from 'react';
-import {PedidoResumenScreen} from "@/features/pedidos-resumen/components/PedidoResumenScreen";
+import { redirect } from 'next/navigation';
+import { PedidoResumenScreen } from '@/features/pedidos-resumen/components/PedidoResumenScreen';
 
+interface PedidosResumenPageProps {
+  searchParams?: Promise<{
+    vendor?: string;
+  }>;
+}
 
-export default function PedidosResumenPage() {
-  return (
-    <Suspense fallback={<div className="p-6 text-sm text-gray-500">Cargando pantalla cliente...</div>}>
-      <PedidoResumenScreen />
-    </Suspense>
-  );
+export default async function PedidosResumenPage({ searchParams }: Readonly<PedidosResumenPageProps>) {
+  const resolvedSearchParams = await searchParams;
+  const vendorPin = resolvedSearchParams?.vendor?.trim().toUpperCase();
+
+  if (!vendorPin) {
+    redirect('/pedidos-resumen/seleccionar');
+  }
+
+  return <PedidoResumenScreen vendorPin={vendorPin} />;
 }

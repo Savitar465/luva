@@ -1,5 +1,7 @@
 'use client';
 
+import { useState } from 'react';
+import { CancelOrderModal } from '@/features/pedidos/components/CancelOrderModal';
 import { LoadingSpinner } from '@/features/shared/ui/LoadingSpinner';
 import { CurrentOrderPanel } from '@/features/pedidos/components/CurrentOrderPanel';
 import { PedidoFooter } from '@/features/pedidos/components/PedidoFooter';
@@ -10,6 +12,8 @@ import { usePedidoVendedor } from '@/features/pedidos/hooks/usePedidoVendedor';
 import { useVendorPin } from '@/features/pedidos/hooks/useVendorPin';
 
 export function PedidoVendedorScreen() {
+  const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
+
   const {
     vendorPin,
     vendorPinInput,
@@ -101,9 +105,19 @@ export function PedidoVendedorScreen() {
           isFinalizing={isFinalizing}
           isCancelling={isCancelling}
           onFinalize={handleFinalize}
-          onCancel={handleCancelOrder}
+          onCancel={() => setIsCancelModalOpen(true)}
         />
       </div>
+
+      <CancelOrderModal
+        open={isCancelModalOpen}
+        loading={isCancelling}
+        onClose={() => setIsCancelModalOpen(false)}
+        onConfirm={async () => {
+          await handleCancelOrder();
+          setIsCancelModalOpen(false);
+        }}
+      />
     </div>
   );
 }
