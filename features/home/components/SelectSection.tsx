@@ -3,11 +3,11 @@ import { ContainerIcon, IceCreamIcon } from '@/public/icons';
 
 export function SelectSection() {
   return (
-    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-linear-to-br from-[#f8f7ff] to-[#fef4f4] p-4 sm:p-6 lg:p-8">
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-linear-to-br from-[#edf9fa] to-[#f5f2f3] p-4 sm:p-6 lg:p-8">
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.03]"
         style={{
-          backgroundImage: 'radial-gradient(circle, #141414 1px, transparent 1px)',
+          backgroundImage: 'radial-gradient(circle, #241E20 1px, transparent 1px)',
           backgroundSize: '20px 20px',
         }}
         aria-hidden="true"
@@ -16,7 +16,7 @@ export function SelectSection() {
       <div className="relative w-full max-w-5xl">
         <div className="mb-12 text-center sm:mb-16">
           <div className="mb-6 flex justify-center">
-            <div className="flex h-16 w-16 rotate-3 items-center justify-center rounded-3xl bg-linear-to-br from-blue-500 to-purple-600 shadow-lg transition-transform hover:rotate-6 sm:h-20 sm:w-20">
+            <div className="flex h-16 w-16 rotate-3 items-center justify-center rounded-3xl bg-linear-to-br from-[#35AFB4] to-[#241E20] shadow-lg transition-transform hover:rotate-6 sm:h-20 sm:w-20">
               <IceCreamIcon
                 className="text-white"
                 style={{ width: '32px', height: '40px' }}
@@ -24,9 +24,9 @@ export function SelectSection() {
               />
             </div>
           </div>
-          <h1 className="mb-4 text-4xl font-bold tracking-tight text-[#141414] sm:text-5xl lg:text-6xl">
+          <h1 className="mb-4 text-4xl font-bold tracking-tight text-[#241E20] sm:text-5xl lg:text-6xl">
             Sistema de
-            <span className="block bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            <span className="block bg-linear-to-r from-[#35AFB4] to-[#241E20] bg-clip-text text-transparent">
               Gestion de Pedidos
             </span>
           </h1>
@@ -37,9 +37,9 @@ export function SelectSection() {
 
         <div className="grid gap-6 md:grid-cols-2 lg:gap-8">
           <Link href="/pedidos" className="group">
-            <div className="cursor-pointer rounded-3xl border border-gray-100 bg-white p-8 shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl lg:p-10">
+            <div className="cursor-pointer rounded-3xl border border-[#d7eeef] bg-white p-8 shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl lg:p-10">
               <div className="flex flex-col items-center text-center">
-                <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-linear-to-br from-blue-500 to-blue-600 shadow-lg transition-transform duration-300 group-hover:scale-110 lg:h-24 lg:w-24">
+                <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-linear-to-br from-[#35AFB4] to-[#2d9599] shadow-lg transition-transform duration-300 group-hover:scale-110 lg:h-24 lg:w-24">
                   <IceCreamIcon
                     className="text-white"
                     style={{ width: '36px', height: '44px' }}
@@ -47,7 +47,7 @@ export function SelectSection() {
                   />
                 </div>
 
-                <h2 className="mb-3 text-2xl font-bold text-[#141414] lg:text-3xl">
+                <h2 className="mb-3 text-2xl font-bold text-[#241E20] lg:text-3xl">
                   Realizar Pedidos
                 </h2>
 
@@ -55,7 +55,7 @@ export function SelectSection() {
                   Crea nuevos pedidos, selecciona presentaciones y sabores para tus clientes
                 </p>
 
-                <div className="inline-flex items-center gap-2 font-semibold text-blue-600 transition-all group-hover:gap-3">
+                <div className="inline-flex items-center gap-2 font-semibold text-[#2d9599] transition-all group-hover:gap-3">
                   <span>Comenzar</span>
                   <svg
                     width="20"
@@ -79,9 +79,9 @@ export function SelectSection() {
           </Link>
 
           <Link href="/pedidos-resumen/seleccionar" className="group">
-            <div className="cursor-pointer rounded-3xl border border-gray-100 bg-white p-8 shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl lg:p-10">
+            <div className="cursor-pointer rounded-3xl border border-[#e8e2e4] bg-white p-8 shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl lg:p-10">
               <div className="flex flex-col items-center text-center">
-                <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-linear-to-br from-purple-500 to-purple-600 shadow-lg transition-transform duration-300 group-hover:scale-110 lg:h-24 lg:w-24">
+                <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-linear-to-br from-[#241E20] to-[#3a3134] shadow-lg transition-transform duration-300 group-hover:scale-110 lg:h-24 lg:w-24">
                   <ContainerIcon
                     className="text-white"
                     style={{ width: '36px', height: '36px' }}
@@ -89,7 +89,7 @@ export function SelectSection() {
                   />
                 </div>
 
-                <h2 className="mb-3 text-2xl font-bold text-[#141414] lg:text-3xl">
+                <h2 className="mb-3 text-2xl font-bold text-[#241E20] lg:text-3xl">
                   Vista de Pedidos
                 </h2>
 
@@ -97,7 +97,7 @@ export function SelectSection() {
                   Revisa el resumen de pedidos activos y su estado actual
                 </p>
 
-                <div className="inline-flex items-center gap-2 font-semibold text-purple-600 transition-all group-hover:gap-3">
+                <div className="inline-flex items-center gap-2 font-semibold text-[#241E20] transition-all group-hover:gap-3">
                   <span>Ver pedidos</span>
                   <svg
                     width="20"

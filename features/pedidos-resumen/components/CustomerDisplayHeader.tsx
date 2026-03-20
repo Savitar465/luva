@@ -5,18 +5,18 @@ interface CustomerDisplayHeaderProps {
   vendorPin?: string;
 }
 
-export function CustomerDisplayHeader({ realtimeStatus, vendorPin }: CustomerDisplayHeaderProps) {
+export function CustomerDisplayHeader({ realtimeStatus, vendorPin }: Readonly<CustomerDisplayHeaderProps>) {
   const isConnected = realtimeStatus === 'CONNECTED';
 
   return (
     <header className="pb-4 sm:pb-6">
-      <div className="flex flex-col gap-4 border-b border-black/10 pb-6 sm:flex-row sm:items-center sm:justify-between sm:pb-8">
+      <div className="flex flex-col gap-4 border-b border-[#d8eaec] pb-6 sm:flex-row sm:items-center sm:justify-between sm:pb-8">
         <div className="flex items-center gap-4">
-          <div className="text-[#141414]">
+          <div className="text-[#241E20]">
             <IceCreamIcon aria-hidden="true" style={{ width: '32px', height: '40px' }} />
           </div>
           <div>
-            <h1 className="text-3xl font-extrabold uppercase tracking-tight text-[#141414] sm:text-4xl lg:text-5xl">
+            <h1 className="text-3xl font-extrabold uppercase tracking-tight text-[#241E20] sm:text-4xl lg:text-5xl">
               Tu pedido en preparacion
             </h1>
             <p className="mt-1 text-sm text-slate-500 sm:text-base">
@@ -28,7 +28,7 @@ export function CustomerDisplayHeader({ realtimeStatus, vendorPin }: CustomerDis
         <div
           className={`inline-flex w-fit items-center rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] sm:text-sm ${
             isConnected
-              ? 'border-emerald-200 bg-emerald-50 text-emerald-700'
+              ? 'border-[#9cd9dd] bg-[#e6f6f7] text-[#257a7e]'
               : 'border-amber-200 bg-amber-50 text-amber-700'
           }`}
         >

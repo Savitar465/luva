@@ -2,14 +2,18 @@
 
 :root {
   --background: #F7F7F7;
-  --foreground: #141414;
+  --foreground: #241E20;
+  --brand-primary: #35AFB4;
+  --brand-dark: #241E20;
+  --brand-primary-soft: #E6F6F7;
+  --brand-border: #B9E4E7;
   --font-plus-jakarta-sans: 'Plus Jakarta Sans', -apple-system, Roboto, Helvetica, sans-serif;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-plus-jakarta-sans);
+  font-family: var(--font-plus-jakarta-sans), sans-serif;
 }
 
 /* ── Page Layout ── */
@@ -26,7 +30,7 @@ body {
   position: fixed;
   inset: 0;
   opacity: 0.03;
-  background: radial-gradient(70.71% 70.71% at 50% 50%, #141414 1.77%, rgba(20, 20, 20, 0) 1.77%);
+  background: radial-gradient(70.71% 70.71% at 50% 50%, var(--brand-dark) 1.77%, rgba(36, 30, 32, 0) 1.77%);
   pointer-events: none;
   z-index: 0;
 }
@@ -67,7 +71,7 @@ body {
   line-height: 40px;
   letter-spacing: -0.9px;
   text-transform: uppercase;
-  color: #141414;
+  color: var(--brand-dark);
   margin: 0;
 }
 
@@ -81,7 +85,7 @@ body {
   line-height: 20px;
   letter-spacing: 1.4px;
   text-transform: uppercase;
-  color: rgba(20, 20, 20, 0.60);
+  color: rgba(36, 30, 32, 0.75);
 }
 
 /* ── Order List ── */
@@ -166,7 +170,7 @@ body {
   align-items: center;
   padding: 40px;
   border-radius: 16px;
-  background: #141414;
+  background: var(--brand-dark);
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.10), 0 8px 10px -6px rgba(0, 0, 0, 0.10);
 }
 
@@ -217,7 +221,7 @@ body {
 
 .indicator-dot--active {
   width: 48px;
-  background: #141414;
+  background: var(--brand-primary);
 }
 
 /* ── Animations ── */

@@ -15,13 +15,13 @@ export function PedidoHeader({
   onSaveVendorPin,
 }: PedidoHeaderProps) {
   return (
-    <header className="flex flex-col gap-4 border-b border-gray-100 px-6 pt-6 pb-4 md:flex-row md:items-end md:justify-between">
+    <header className="flex flex-col gap-4 border-b border-[#deecee] px-6 pt-6 pb-4 md:flex-row md:items-end md:justify-between">
       <div className="flex items-center gap-3">
-        <div className="shrink-0 text-[#141414]">
+        <div className="shrink-0 text-[#241E20]">
           <IceCreamIcon />
         </div>
         <div>
-          <h1 className="text-xl font-semibold text-[#141414]">Nuevo Pedido</h1>
+          <h1 className="text-xl font-semibold text-[#241E20]">Nuevo Pedido</h1>
           <p className="text-sm text-gray-500">Sincronizacion en tiempo real con pantalla cliente</p>
         </div>
       </div>

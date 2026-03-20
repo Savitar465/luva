@@ -24,25 +24,25 @@ function PresentationCardComponent({
       disabled={disabled}
       className={`min-h-36 rounded-2xl border bg-gray-50 p-5 text-left transition-all active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60 ${
         isJustAdded
-          ? 'pos-added-pop border-emerald-400 bg-emerald-50/70 shadow-[0_0_0_3px_rgba(16,185,129,0.18)]'
-          : 'border-gray-200 hover:border-gray-300 hover:bg-gray-100'
+          ? 'pos-added-pop border-[#35AFB4] bg-[#e6f6f7] shadow-[0_0_0_3px_rgba(53,175,180,0.20)]'
+          : 'border-gray-200 hover:border-[#8fd1d4] hover:bg-[#f2fbfb]'
       }`}
     >
       <div className="flex h-full flex-col gap-4">
         <div className="flex items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <div className="flex h-14 w-14 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-700">
+            <div className="flex h-14 w-14 items-center justify-center rounded-full border border-[#d8eaec] bg-white text-[#241E20]">
               <Icon />
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-[#141414]">{presentation.name}</h3>
+              <h3 className="text-lg font-semibold text-[#241E20]">{presentation.name}</h3>
               <p className="text-base text-gray-600">${presentation.basePrice.toFixed(2)}</p>
             </div>
           </div>
           {quantity > 0 ? (
             <span
               className={`rounded-lg px-3 py-1 text-sm font-bold ${
-                isJustAdded ? 'animate-pulse bg-emerald-600 text-white' : 'bg-[#141414] text-white'
+                isJustAdded ? 'animate-pulse bg-[#35AFB4] text-white' : 'bg-[#241E20] text-white'
               }`}
             >
               x{quantity}

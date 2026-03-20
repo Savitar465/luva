@@ -24,7 +24,7 @@ function DisplayStateCard({
       className={`rounded-2xl border p-6 shadow-sm sm:p-8 ${
         tone === 'error'
           ? 'border-red-200 bg-red-50 text-red-700'
-          : 'border-black/5 bg-white text-[#141414]'
+          : 'border-[#d8eaec] bg-white text-[#241E20]'
       }`}
     >
       <p className="text-xl font-semibold sm:text-2xl">{title}</p>
@@ -39,12 +39,12 @@ export function PedidoResumenScreen({ vendorPin }: Readonly<PedidoResumenScreenP
   });
 
   return (
-    <div className="relative flex min-h-screen justify-center overflow-hidden bg-[#F7F7F7]">
+    <div className="relative flex min-h-screen justify-center overflow-hidden bg-[#f4fbfb]">
       <div
         className="pointer-events-none fixed inset-0 opacity-[0.03]"
         style={{
           background:
-            'radial-gradient(70.71% 70.71% at 50% 50%, #141414 1.77%, rgba(20, 20, 20, 0) 1.77%)',
+            'radial-gradient(70.71% 70.71% at 50% 50%, #241E20 1.77%, rgba(36, 30, 32, 0) 1.77%)',
         }}
         aria-hidden="true"
       />
@@ -54,7 +54,7 @@ export function PedidoResumenScreen({ vendorPin }: Readonly<PedidoResumenScreenP
         <CustomerDisplayHeader realtimeStatus={realtimeStatus} vendorPin={vendorPin} />
 
         {loading ? (
-          <div className="rounded-2xl border border-black/5 bg-white px-6 py-10 shadow-sm sm:px-8 sm:py-12">
+          <div className="rounded-2xl border border-[#d8eaec] bg-white px-6 py-10 shadow-sm sm:px-8 sm:py-12">
             <LoadingSpinner label="Cargando pedido..." sizeClassName="h-10 w-10" />
           </div>
         ) : null}

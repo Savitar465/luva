@@ -45,7 +45,7 @@ export function PedidoVendedorScreen() {
   });
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center bg-linear-to-br from-[#f8f7ff] to-[#fef4f4] p-3 sm:p-4">
+    <div className="relative flex min-h-screen items-center justify-center bg-linear-to-br from-[#edf9fa] to-[#f5f2f3] p-3 sm:p-4">
       <div
         className="pointer-events-none absolute inset-0"
         style={{
@@ -55,7 +55,7 @@ export function PedidoVendedorScreen() {
         aria-hidden="true"
       />
 
-      <div className="relative flex min-h-[82vh] w-full max-w-6xl flex-col overflow-hidden rounded-3xl bg-white shadow-md">
+      <div className="relative flex min-h-[82vh] w-full max-w-6xl flex-col overflow-hidden rounded-3xl border border-[#d8eaec] bg-white shadow-md">
         <PedidoHeader
           vendorPinInput={vendorPinInput}
           activeVendorPin={vendorPin}

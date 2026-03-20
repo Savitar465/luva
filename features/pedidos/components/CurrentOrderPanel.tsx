@@ -8,8 +8,8 @@ interface CurrentOrderPanelProps {
 
 export function CurrentOrderPanel({ items, disableActions = false, onRemoveItem }: Readonly<CurrentOrderPanelProps>) {
   return (
-    <div className="rounded-2xl border border-gray-200 bg-white p-4 sm:p-5">
-      <h3 className="mb-3 text-lg font-semibold text-[#141414]">Pedido actual</h3>
+    <div className="rounded-2xl border border-[#d8eaec] bg-white p-4 sm:p-5">
+      <h3 className="mb-3 text-lg font-semibold text-[#241E20]">Pedido actual</h3>
 
       {items.length === 0 ? (
         <p className="text-sm text-gray-500">Aun no hay productos en el pedido.</p>
@@ -18,15 +18,15 @@ export function CurrentOrderPanel({ items, disableActions = false, onRemoveItem 
           {items.map((item) => (
             <li
               key={item.id}
-              className="flex items-center justify-between gap-3 rounded-xl border border-gray-100 bg-gray-50 p-3"
+              className="flex items-center justify-between gap-3 rounded-xl border border-[#e8f3f4] bg-[#f6fcfc] p-3"
             >
               <div>
-                <p className="text-base font-semibold text-[#141414]">{item.nombre}</p>
+                <p className="text-base font-semibold text-[#241E20]">{item.nombre}</p>
                 <p className="text-sm text-gray-500">
                   {item.cantidad} x Bs. {item.precioUnit.toFixed(2)}
                 </p>
               </div>
-              <p className="text-base font-semibold text-[#141414]">Bs. {item.subtotal.toFixed(2)}</p>
+              <p className="text-base font-semibold text-[#241E20]">Bs. {item.subtotal.toFixed(2)}</p>
               <button className="rounded-full p-1.5 text-red-500 transition-colors hover:bg-red-200 disabled:opacity-40 disabled:hover:bg-transparent"
                         type="button"
                         onClick={() => onRemoveItem(item.productoId)}

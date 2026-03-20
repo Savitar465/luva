@@ -13,19 +13,19 @@ export default async function PedidosResumenSeleccionarPage() {
   }
 
   return (
-    <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#F7F7F7] p-4">
+    <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#f4fbfb] p-4">
       <div
         className="pointer-events-none fixed inset-0 opacity-[0.03]"
         style={{
           background:
-            'radial-gradient(70.71% 70.71% at 50% 50%, #141414 1.77%, rgba(20, 20, 20, 0) 1.77%)',
+            'radial-gradient(70.71% 70.71% at 50% 50%, #241E20 1.77%, rgba(36, 30, 32, 0) 1.77%)',
         }}
         aria-hidden="true"
       />
 
-      <section className="relative z-10 w-full max-w-3xl rounded-3xl border border-black/5 bg-white p-6 shadow-sm sm:p-8">
+      <section className="relative z-10 w-full max-w-3xl rounded-3xl border border-[#d8eaec] bg-white p-6 shadow-sm sm:p-8">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">Pantalla cliente</p>
-        <h1 className="mt-2 text-2xl font-extrabold text-[#141414] sm:text-3xl">Selecciona la tienda antes de ingresar</h1>
+        <h1 className="mt-2 text-2xl font-extrabold text-[#241E20] sm:text-3xl">Selecciona la tienda antes de ingresar</h1>
         <p className="mt-2 text-sm text-gray-600 sm:text-base">
           Elige el codigo de tienda para mostrar solo el pedido correspondiente en tiempo real.
         </p>
@@ -34,12 +34,12 @@ export default async function PedidosResumenSeleccionarPage() {
           <input
             name="vendor"
             placeholder="Codigo de tienda (ej: VEND-01)"
-            className="h-11 rounded-xl border border-gray-200 px-3 text-sm font-semibold uppercase text-[#141414] outline-none transition-colors focus:border-gray-400"
+            className="h-11 rounded-xl border border-[#d8eaec] px-3 text-sm font-semibold uppercase text-[#241E20] outline-none transition-colors focus:border-[#35AFB4]"
             required
           />
           <button
             type="submit"
-            className="h-11 rounded-xl bg-[#141414] px-5 text-sm font-semibold text-white"
+            className="h-11 rounded-xl bg-[#35AFB4] px-5 text-sm font-semibold text-white transition-colors hover:bg-[#2f9ca1]"
           >
             Ver pantalla
           </button>
@@ -62,7 +62,7 @@ export default async function PedidosResumenSeleccionarPage() {
                 <Link
                   key={pin}
                   href={`/pedidos-resumen?vendor=${encodeURIComponent(pin)}`}
-                  className="rounded-xl border border-gray-200 px-4 py-3 text-sm font-semibold text-[#141414] transition-colors hover:border-gray-300 hover:bg-gray-50"
+                  className="rounded-xl border border-[#d8eaec] px-4 py-3 text-sm font-semibold text-[#241E20] transition-colors hover:border-[#9cd9dd] hover:bg-[#f2fbfb]"
                 >
                   {pin}
                 </Link>
@@ -72,7 +72,7 @@ export default async function PedidosResumenSeleccionarPage() {
         </div>
 
         <div className="mt-6 flex justify-end">
-          <Link href="/" className="text-sm font-semibold text-gray-600 hover:text-[#141414]">
+          <Link href="/" className="text-sm font-semibold text-gray-600 hover:text-[#241E20]">
             Volver al inicio
           </Link>
         </div>

@@ -18,7 +18,7 @@ export function PresentationGrid({
 }: PresentationGridProps) {
   return (
     <div>
-      <h2 className="mb-1 text-lg font-semibold text-[#141414]">Presentaciones</h2>
+      <h2 className="mb-1 text-lg font-semibold text-[#241E20]">Presentaciones</h2>
       <p className="mb-4 text-sm text-gray-500">Modo POS: toca una tarjeta para sumar una unidad.</p>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
